@@ -57,32 +57,46 @@ const int teoria1 = 1000;                  // "Return Value" do único botão da
 const int teoria2 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
 
 /*******************************************************************************************************************************************
- * Variáveis da tela de teoria 3 (PicId 6 - teoria)*/
+ * Variáveis da tela material da haste (PicId 6 - mat haste)*/
 
-const int teoria3 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
-
-/*******************************************************************************************************************************************
- * Variáveis da tela de teoria 4 (PicId 7 - teoria)*/
-
-const int teoria4 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
+const int  Hmaterial1 = 1000;                  // "Return Value" do botão 
+const int  Hmaterial2 = 1000;                  // "Return Value" do botão
+const int  Hmaterial3 = 1000;                  // "Return Value" do botão
+const int  Hmaterial4 = 1000;                  // "Return Value" do botão
 
 /*******************************************************************************************************************************************
- * Variáveis da tela de teoria 5 (PicId 8 - teoria)*/
+ * Variáveis da tela do tipo de analise (PicId 7 - tipo analise)*/
 
-const int teoria5 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
+const int agora = 1000;                  // "Return Value" do botão
+const int escolha = 1000;                // "Return Value" do botão
+
+/******************************************************************************************************************************************
+ * Variáveis da tela céu (PicId 8 - céu)*/
+
+const int ceu1 = 1000;                  // "Return Value" do botão 
+const int ceu2 = 1000;                  // "Return Value" do botão 
+const int ceu3 = 1000;                  // "Return Value" do botão
+const int ceu4 = 1000;                  // "Return Value" do botão  
+const int ceu5 = 1000;                  // "Return Value" do botão 
+const int ceu6 = 1000;                  // "Return Value" do botão 
 
 /*******************************************************************************************************************************************
- * Variáveis da tela passos 0 (PicId 9 - passos)*/
+ * Variáveis da tela superficie (PicId 9 - tipos superfície)*/
 
-const int cont9 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt9 = 1002;                  // "Return Value" do botão da tela voltar
+const int sup1 = 1001;                  // "Return Value" do botão 
+const int sup2 = 1002;                  // "Return Value" do botão 
+const int sup3 = 1002;                  // "Return Value" do botão 
+const int sup4 = 1002;                  // "Return Value" do botão 
+const int sup5 = 1002;                  // "Return Value" do botão 
+const int sup6 = 1002;                  // "Return Value" do botão 
+
 
 /*******************************************************************************************************************************************
  * Variáveis da tela passos 1 (PicId 10 - passos)*/
 
-const int cont10 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt10 = 1002;                  // "Return Value" do botão da tela voltar
-
+int total = 0;                  // valor da proteçao com luz total
+int situacao = 0;               // valor da protecao para a situacao escolhida
+char status;                    // status de proteção
 
 
 /*******************************************************************************************************************************************
