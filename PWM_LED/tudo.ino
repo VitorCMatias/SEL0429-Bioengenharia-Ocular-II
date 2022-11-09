@@ -5,57 +5,35 @@
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 /*************************************************************
-Indice das telas
-*/
+Indice das telas*/
 
 const int picIdIntro = 0;                      // PicId da tela de introdução              (PicId 00 - Intro    )
-const int picIdSenha = 1;                      // PicId da tela de senha                 (PicId 01 - Audio    )
-const int picIdTipo = 2;                       // PicId da tela do tipo evento                    (PicId 02 - RTC      )
-const int picIdTeoria0 = 3;                    // PicId da tela Introdução teórica              (PicId 03 - CurveA0  )
-const int picIdTeoria1 = 4;                    // PicId da tela Introdução teórica              (PicId 03 - CurveA0  )
-const int picIdTeoria2 = 5;                    // PicId da tela Introdução teórica              (PicId 03 - CurveA0  )
-const int picIdTeoria3 = 6;                    // PicId da tela Introdução teórica              (PicId 03 - CurveA0  )
-const int picIdTeoria4 = 7;                    // PicId da tela Introdução teórica              (PicId 03 - CurveA0  )
-const int picIdTeoria5 = 8;                    // PicId da tela Introdução teórica              (PicId 03 - CurveA0  )
-const int picIdIdPassos0 = 9;                  // PicId da tela de passos para aplicação    (PicId 04 - CurveSim )
-const int picIdIdPassos1 = 10;                 // PicId da tela de passos para aplicação    (PicId 04 - CurveSim )
-const int picIdIdPassos2 = 11;                 // PicId da tela de passos para aplicação    (PicId 04 - CurveSim )
-const int picIdIdPassos3 = 12;                 // PicId da tela de passos para aplicação    (PicId 04 - CurveSim )
-const int picIdIdPassos4 = 13;                 // PicId da tela de passos para aplicação    (PicId 04 - CurveSim )
-const int picIdArmacao = 14;                   // PicId da tela de escolha armação            (PicId 05 - Pressure )
-const int picIdMaterial = 15;                  // PicId da tela de escolha material                  (PicId 06 - Led      )
-const int picIdCor = 16;                       // PicId da tela de escolha cor                 (PicId 07 - Text     )
-const int picIdLente = 17;                     // PicId da tela de escolha lente              (PicId 08 - Settings )
-const int picIdHaste = 18;                     // PicId da tela de escolha haste               (PicId 09 - Volume   )
-const int picIdAnalise = 19;                   // PicId da tela analise
-const int picIdHorario = 20;                   // PicId da tela analise horario   
-const int picIdCeu0 = 21;                      // PicId da tela escolha ceu 
-const int picIdCeu1 = 22;                      // PicId da tela escolha ceu 
-const int picIdCeu2 = 23;                      // PicId da tela escolha ceu 
-const int picIdSup0 = 24;                      // PicId da tela escolha sup
-const int picIdSup1 = 25;                      // PicId da tela escolha sup  
-const int picIdDados = 26;                     // PicId da tela escolha confirmação .....Talvez não sei fazer
-const int picIdResultado = 27;                 // PicId da tela escolha Resultado ....... Confirmar se vai ser assim msm a resposta
+const int picIdAramacao = 1;                      // PicId da tela de senha                
+const int picIdMaterialArm = 2;                       // PicId da tela do tipo evento                   
+const int picIdPonte = 3;                    // PicId da tela Introdução teórica              
+const int picIdMaterialPonte = 4;                    // PicId da tela Introdução teórica              
+const int picIdHaste = 5;                    // PicId da tela Introdução teórica              
+const int picIdMaterialHaste = 6;                    // PicId da tela Introdução teórica              
+const int picIdTipoAnalise = 7;                    // PicId da tela Introdução teórica              
+const int picIdCeu = 8;                    // PicId da tela Introdução teórica              
+const int picIdIdSuperficie = 9;                  // PicId da tela de passos para aplicação    
+const int picIdIdResultado = 10;                 // PicId da tela de passos para aplicação    
 
 /*******************************************************************************************************************************************
- * Variáveis da tela de introdução (PicId 0 - intro)
- */
+ * Variáveis da tela de introdução (PicId 0 - intro)*/
 
 const int initDemo = 1000;                  // "Return Value" do único botão da tela de introdução (A tela inteira é o botão)
 
 /*******************************************************************************************************************************************
- * Variáveis da tela senha (PicId 1 - Senha)
- */
+ * Variáveis da tela senha (PicId 1 - Senha)*/
 
 const int cont1 = 1001;                  // "Return Value" do botão da tela continuar
 const int volt1 = 1002;                  // "Return Value" do botão da tela voltar
 
 long senha;                            //variavel da senha
 
-
 /*******************************************************************************************************************************************
- * Variáveis da tela de Tipo (PicId 2 - tipo)
- */
+ * Variáveis da tela de Tipo (PicId 2 - tipo)*/
  
 const int feira = 1000;                  // "Return Value" do botão feira
 const int universidade = 1001;           // "Return Value" do botão universidade
@@ -64,216 +42,51 @@ const int volt2 = 1002;                  // "Return Value" do botão da tela vol
 
 
 /*******************************************************************************************************************************************
- * Variáveis da tela teoria 0 (PicId 3 - teoria)
- */
+ * Variáveis da tela teoria 0 (PicId 3 - teoria)*/
 
 const int teoria0= 1000;                  // "Return Value" do único botão da tela  (A tela inteira é o botão)
 
 /*******************************************************************************************************************************************
- * Variáveis da tela de teoria 1 (PicId 4 - teoria)
- */
+ * Variáveis da tela de teoria 1 (PicId 4 - teoria)*/
 
 const int teoria1 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
 
 /*******************************************************************************************************************************************
- * Variáveis da tela de teoria 2 (PicId 5 - teoria)
- */
+ * Variáveis da tela de teoria 2 (PicId 5 - teoria)*/
 
 const int teoria2 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
 
 /*******************************************************************************************************************************************
- * Variáveis da tela de teoria 3 (PicId 6 - teoria)
- */
+ * Variáveis da tela de teoria 3 (PicId 6 - teoria)*/
 
 const int teoria3 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
 
 /*******************************************************************************************************************************************
- * Variáveis da tela de teoria 4 (PicId 7 - teoria)
- */
+ * Variáveis da tela de teoria 4 (PicId 7 - teoria)*/
 
 const int teoria4 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
 
 /*******************************************************************************************************************************************
- * Variáveis da tela de teoria 5 (PicId 8 - teoria)
- */
+ * Variáveis da tela de teoria 5 (PicId 8 - teoria)*/
 
 const int teoria5 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
 
 /*******************************************************************************************************************************************
- * Variáveis da tela passos 0 (PicId 9 - passos)
- */
+ * Variáveis da tela passos 0 (PicId 9 - passos)*/
 
 const int cont9 = 1001;                  // "Return Value" do botão da tela continuar
 const int volt9 = 1002;                  // "Return Value" do botão da tela voltar
 
 /*******************************************************************************************************************************************
- * Variáveis da tela passos 1 (PicId 10 - passos)
- */
+ * Variáveis da tela passos 1 (PicId 10 - passos)*/
 
 const int cont10 = 1001;                  // "Return Value" do botão da tela continuar
 const int volt10 = 1002;                  // "Return Value" do botão da tela voltar
 
-/*******************************************************************************************************************************************
- * Variáveis da tela passos 2 (PicId 11 - passos)
- */
-
-const int cont11 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt11 = 1002;                  // "Return Value" do botão da tela voltar
-
-/*******************************************************************************************************************************************
- * Variáveis da tela passos 3 (PicId 12 - passos)
- */
-
-const int cont12 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt12 = 1002;                  // "Return Value" do botão da tela voltar
-
-/*******************************************************************************************************************************************
- * Variáveis da tela passos 4 (PicId 13 - passos)
- */
-
-const int cont13 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt13 = 1002;                  // "Return Value" do botão da tela voltar
-
-/*******************************************************************************************************************************************
- * Variáveis da tela armacao (PicId 14 - Armação)
- */
-
-const int cont14 = 1001;                  // "Return Value" do botão da tela continuar
-const int arm_quarado = 1000;             // "Return Value" do botão da tela armacao quadrada
-const int arm_arredondada = 1000;         // "Return Value" do botão da tela armacao arredondada
-const int arm_mascara = 1000;             // "Return Value" do botão da tela armacao mascara
-const int arm_redonda = 1000;             // "Return Value" do botão da tela armacao redonda
-
-/*******************************************************************************************************************************************
- * Variáveis da tela material (PicId 15 - material)
- */
-
-const int cont15 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt15 = 1002;                  // "Return Value" do botão da tela voltar
-const int mat_plastico = 1000;            // "Return Value" do botão da tela 
-const int mat_metal = 1000;               // "Return Value" do botão da tela 
-const int mat_madeira = 1000;             // "Return Value" do botão da tela 
-const int mat_outro = 1000;               // "Return Value" do botão da tela 
-
-/*******************************************************************************************************************************************
- * Variáveis da tela lente (PicId 16 - cor )
- */
-
-const int cont16 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt16 = 1002;                  // "Return Value" do botão da tela voltar
-const int cor_marrom = 1000;            // "Return Value" do botão da tela 
-const int cor_verde = 1000;               // "Return Value" do botão da tela 
-const int cor_preto = 1000;             // "Return Value" do botão da tela 
-
-/*******************************************************************************************************************************************
- * Variáveis da tela lente  (PicId 17 - lente)
- */
-
-const int cont17 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt17 = 1002;                  // "Return Value" do botão da tela voltar
-
-// Descobrir como fazer o deslize
-
-/*******************************************************************************************************************************************
- * Variáveis da tela haste (PicId 18 - cor haste)
- */
-
-const int cont18 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt18 = 1002;                  // "Return Value" do botão da tela voltar
-const int hast_fina = 1000;               // "Return Value" do botão da tela 
-const int hast_media = 1000;              // "Return Value" do botão da tela 
-const int hast_larga = 1000;              // "Return Value" do botão da tela 
-
-/*******************************************************************************************************************************************
- * Variáveis da tela analise (PicId 19 - analise)
- */
-
-const int cont19 = 1001;                  // "Return Value" do botão da tela continuar
-const int hoje = 1000;                    // "Return Value" do botão da tela 
-const int def = 1000;                     // "Return Value" do botão da tela 
-
-/*******************************************************************************************************************************************
- * Variáveis da tela horario (PicId 20 - horario)
- */
-
-const int cont20 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt20 = 1002;                  // "Return Value" do botão da tela voltar
-const int manha1= 1000;                   // "Return Value" do botão da tela 
-const int manha2 = 1000;                  // "Return Value" do botão da tela 
-const int meiodia = 1000;                 // "Return Value" do botão da tela 
-const int tarde1 = 1000;                  // "Return Value" do botão da tela 
-const int tarde2 = 1000;                  // "Return Value" do botão da tela 
-
-/*******************************************************************************************************************************************
- * Variáveis da tela ceu (PicId 21 - ceu)
- */
-
-const int cont21 = 1001;                  // "Return Value" do botão da tela continuar
-const int ceu1= 1000;                     // "Return Value" do botão da tela 
-const int ceu2 = 1000;                    // "Return Value" do botão da tela 
-
-/*******************************************************************************************************************************************
- * Variáveis da tela ceu (PicId 22 - ceu)
- */
-
-const int cont22 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt22 = 1002;                  // "Return Value" do botão da tela voltar
-const int ceu3= 1000;                     // "Return Value" do botão da tela 
-const int ceu4 = 1000;                    // "Return Value" do botão da tela 
-
-/*******************************************************************************************************************************************
- * Variáveis da tela ceu (PicId 23 - ceu)
- */
-
-const int cont23 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt23 = 1002;                  // "Return Value" do botão da tela voltar
-const int ceu5= 1000;                     // "Return Value" do botão da tela 
-const int ceu6 = 1000;                    // "Return Value" do botão da tela 
-
-/*******************************************************************************************************************************************
- * Variáveis da tela superficie (PicId 24 - superficie)
- */
-
-const int cont24 = 1001;                  // "Return Value" do botão da tela continuar
-const int sup1= 1000;                     // "Return Value" do botão da tela 
-const int sup2 = 1000;                    // "Return Value" do botão da tela 
-const int sup3 = 1000;                    // "Return Value" do botão da tela 
-
-/*******************************************************************************************************************************************
- * Variáveis da tela superficie (PicId 25 - superficie)
- */
-
-const int cont25 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt25 = 1002;                  // "Return Value" do botão da tela voltar
-const int sup4= 1000;                     // "Return Value" do botão da tela 
-const int sup5 = 1000;                    // "Return Value" do botão da tela 
-const int sup6 = 1000;                    // "Return Value" do botão da tela 
 
 
 /*******************************************************************************************************************************************
- * Variáveis da tela dados(PicId 26 - dados)
- */
-
-const int cont26 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt26 = 1002;                  // "Return Value" do botão da tela voltar
-const int haste= 1000;                    // "Return Value" do botão da tela 
-const int material = 1000;                // "Return Value" do botão da tela 
-const int formato = 1000;                 // "Return Value" do botão da tela 
-const int lente = 1000;                   // "Return Value" do botão da tela 
-const int horas = 1000;                   // "Return Value" do botão da tela 
-const int ceu = 1000;                     // "Return Value" do botão da tela
-const int superficie = 1000;              // "Return Value" do botão da tela 
-
-/*******************************************************************************************************************************************
- * Variáveis da tela resultados (PicId 27 - resultados)
- */
-
-  // Decidir como vai ser essa tela
-
-
-/*******************************************************************************************************************************************
- * Inicialização do LCM
- */
+ * Inicialização do LCM*/
 
 LCM Lcm(Serial);                           // Necessário a Inicialização do LCM com o nome de Lcm e como parâmetro a Serial que será ligado o Display
 
