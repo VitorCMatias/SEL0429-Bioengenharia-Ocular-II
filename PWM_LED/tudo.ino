@@ -7,17 +7,17 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 /*************************************************************
 Indice das telas*/
 
-const int picIdIntro = 0;                      // PicId da tela de introdução              (PicId 00 - Intro    )
-const int picIdAramacao = 1;                      // PicId da tela de senha                
-const int picIdMaterialArm = 2;                       // PicId da tela do tipo evento                   
-const int picIdPonte = 3;                    // PicId da tela Introdução teórica              
-const int picIdMaterialPonte = 4;                    // PicId da tela Introdução teórica              
-const int picIdHaste = 5;                    // PicId da tela Introdução teórica              
-const int picIdMaterialHaste = 6;                    // PicId da tela Introdução teórica              
-const int picIdTipoAnalise = 7;                    // PicId da tela Introdução teórica              
-const int picIdCeu = 8;                    // PicId da tela Introdução teórica              
-const int picIdIdSuperficie = 9;                  // PicId da tela de passos para aplicação    
-const int picIdIdResultado = 10;                 // PicId da tela de passos para aplicação    
+const int picIdIntro = 0;                         // PicId da tela de introdução              (PicId 00 - Intro    )
+const int picIdAramacao = 1;                      // PicId da tela de armacao               
+const int picIdMaterialArm = 2;                   // PicId da tela do material armacao                  
+const int picIdPonte = 3;                         // PicId da tela da ponte            
+const int picIdMaterialPonte = 4;                 // PicId da tela do material da ponte          
+const int picIdHaste = 5;                         // PicId da tela da haste            
+const int picIdMaterialHaste = 6;                 // PicId da tela do material da haste          
+const int picIdTipoAnalise = 7;                   // PicId da tela do tipo de analise            
+const int picIdCeu = 8;                           // PicId da tela do ceu            
+const int picIdIdSuperficie = 9;                  // PicId da tela da superficie 
+const int picIdIdResultado = 10;                  // PicId da tela do resultado 
 
 /*******************************************************************************************************************************************
  * Variáveis da tela de introdução (PicId 0 - intro)*/
