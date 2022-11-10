@@ -9,6 +9,36 @@ Variaveis Gerais*/
 const uint8_t portas[8] = {10,11,12,13,14,15,16,17};   //portas dos 8 quadrantes de intensidade (4 primeiras céu e 4 utltimas superficie);
 int protecao_maxima;
 
+/*************************************************************
+Casos*/
+
+float c;
+
+struct casos{
+  int memoria;
+  float intensidade;
+};
+
+struct casos ceu[6] ={
+                      {1000, 100},    // ceu limpo claro
+                      {1000, 70},     // ceu limpo escuro
+                      {1000, 90},     // ceu poucas nuvens claro
+                      {1000, 70},     // ceu muitas nuves claro
+                      {1000, 60},     // ceu chuvoso nuvens claras
+                      {1000, 50}      // ceu chuvoso nunves escurar
+                      };  
+
+struct casos superficie[6] ={
+                              {1000, 0.3*c},    // terra vermelha
+                              {1000, 0.1*c},    // asfalto
+                              {1000, 0.2*c},     // natureza
+                              {1000, 0.4*c},     // agua
+                              {1000, 0.9*c},     // neve
+                              {1000, 0.15*c}      // cidade
+                            };  
+
+
+
 
 /*************************************************************
 Indice das telas*/
@@ -115,13 +145,6 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 /*******************************************************************************************************************************************
  * Inicialização dos LcmVars*/
 
-LcmVar ExitIntroButton(0);                 // "LcmVar" do botão da tela de introdução (PicId 0 - Intro)
-
-LcmVar NavigationButtons(1);               // "LcmVar" dos botões de navegação da tela principal (PicId 10 - main)
-
-LcmVar PicIdIndicator(10);                 // "LcmVar" dos campos que indicam o PicId atual
-
-
 
 LcmVar IntensidadeSup(); //colocar o vp
 LcmVar IntensidadeInf(); //colocar o vp
@@ -134,7 +157,7 @@ LcmVar Aplicacao(); //colocar o vp
 int ler_sensor();
 void controlar_intensidade(uint8_t porta, int intensidade);
 int resultado_sensor();
-
+void caso();
 
 /*******************************************************************************************************************************************
  * Inicialização do código*/
@@ -164,6 +187,11 @@ void loop() {
      for(int i = 0; i < 8; i++){
        controlar_intensidade(portas[i], 0);
     }
+  }
+
+  if(PicId == 10)
+  {
+    
 
   }
  
@@ -200,6 +228,12 @@ return protecao;
 
 void controlar_intensidade(uint8_t porta, int intensidade){
   pwm.setPWM(porta, 0, 900+18*intensidade);
+}
+
+void caso(){
+
+
+
 }
 
 
