@@ -7,12 +7,11 @@
 Variaveis Gerais*/
 
 const uint8_t portas[8] = {10,11,12,13,14,15,16,17};   //portas dos 8 quadrantes de intensidade (4 primeiras céu e 4 utltimas superficie);
-int protecao_maxima;
 
 /*************************************************************
 Casos*/
 
-float c;
+float c,s; //intensidades
 
 struct casos{
   int memoria;
@@ -36,8 +35,6 @@ struct casos superficie[6] ={
                               {1000, 0.9*c},     // neve
                               {1000, 0.15*c}      // cidade
                             };  
-
-
 
 
 /*************************************************************
@@ -107,7 +104,7 @@ const int agora = 1000;                  // "Return Value" do botão
 const int escolha = 1000;                // "Return Value" do botão
 
 /******************************************************************************************************************************************
- * Variáveis da tela céu (PicId 8 - céu)*/
+ * Variáveis da tela céu (PicId 8 - céu)
 
 const int ceu1 = 1000;                  // "Return Value" do botão 
 const int ceu2 = 1000;                  // "Return Value" do botão 
@@ -116,8 +113,8 @@ const int ceu4 = 1000;                  // "Return Value" do botão
 const int ceu5 = 1000;                  // "Return Value" do botão 
 const int ceu6 = 1000;                  // "Return Value" do botão 
 
-/*******************************************************************************************************************************************
- * Variáveis da tela superficie (PicId 9 - tipos superfície)*/
+*******************************************************************************************************************************************
+  Variáveis da tela superficie (PicId 9 - tipos superfície)
 
 const int sup1 = 1001;                  // "Return Value" do botão 
 const int sup2 = 1002;                  // "Return Value" do botão 
@@ -125,14 +122,15 @@ const int sup3 = 1002;                  // "Return Value" do botão
 const int sup4 = 1002;                  // "Return Value" do botão 
 const int sup5 = 1002;                  // "Return Value" do botão 
 const int sup6 = 1002;                  // "Return Value" do botão 
+*/
 
 
 /*******************************************************************************************************************************************
- * Variáveis da tela passos 1 (PicId 10 - passos)*/
+ * Variáveis da tela resultado (PicId 10 - resultado)*/
 
 int total = 0;                  // valor da proteçao com luz total
 int situacao = 0;               // valor da protecao para a situacao escolhida
-char status;                    // status de proteção
+char status[20];                    // status de proteção
 
 
 /*******************************************************************************************************************************************
@@ -145,11 +143,12 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 /*******************************************************************************************************************************************
  * Inicialização dos LcmVars*/
 
+LcmVar EscolhaCeu(10); //colocar o vp
+LcmVar EscolhaSup(11); //colocar o vp
 
-LcmVar IntensidadeSup(); //colocar o vp
-LcmVar IntensidadeInf(); //colocar o vp
-LcmVar Sensor(); //colocar o vp
-LcmVar Aplicacao(); //colocar o vp
+LcmVar ResultProtecao(12); //colocar o vp
+LcmVar Maxima(13);
+LcmString Resultado(14);
 
 /*******************************************************************************************************************************************
  * Inicialização das funções*/
@@ -182,7 +181,7 @@ void loop() {
       controlar_intensidade(portas[i], 100);
     }
 
-    protecao_maxima = resultado_sensor();
+    total = resultado_sensor();
 
      for(int i = 0; i < 8; i++){
        controlar_intensidade(portas[i], 0);
@@ -192,6 +191,28 @@ void loop() {
   if(PicId == 10)
   {
     
+    caso(); // verifica qual foi o caso escolhido
+
+    // Aciona os LEDs
+    for(int i = 0; i < 4; i++){
+      controlar_intensidade(portas[i], (int)c);
+    }
+
+    for(int i = 4; i < 8; i++){
+      controlar_intensidade(portas[i],(int)s);
+    }
+
+    // Lê os sensores e verifica a proteçao
+    situacao = resultado_sensor();
+
+     
+    Maxima.write(total);
+    ResultProtecao.write(situacao);
+
+    if(situacao>70) status[20] ='protegido';
+    else status[20] ='desprotegido'; 
+
+    Resultado.write(status,20);
 
   }
  
@@ -230,9 +251,28 @@ void controlar_intensidade(uint8_t porta, int intensidade){
   pwm.setPWM(porta, 0, 900+18*intensidade);
 }
 
-void caso(){
+void caso()
+{
+  
+  int leitura_ceu = EscolhaCeu.getData();
 
+    for(int j = 0; j<6;j++)
+    {
+      if(ceu[j].memoria == leitura_ceu){
+         c = ceu[j].intensidade;
+         break;
+      }
+    }
+  
+  int leitura_sup = EscolhaSup.getData();
 
+    for(int j = 0; j<6;j++)
+    {
+      if(superficie[j].memoria == leitura_sup){
+         s = superficie[j].intensidade;
+         break;
+      }
+    }
 
 }
 
