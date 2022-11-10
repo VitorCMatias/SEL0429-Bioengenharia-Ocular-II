@@ -2,7 +2,13 @@
 #include <Adafruit_PWMServoDriver.h>
 #include <UnicViewAD.h>
 
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+
+/*************************************************************
+Variaveis Gerais*/
+
+const uint8_t portas[8] = {10,11,12,13,14,15,16,17};   //portas dos 8 quadrantes de intensidade (4 primeiras céu e 4 utltimas superficie);
+int protecao_maxima;
+
 
 /*************************************************************
 Indice das telas*/
@@ -104,9 +110,10 @@ char status;                    // status de proteção
 
 LCM Lcm(Serial);                           // Necessário a Inicialização do LCM com o nome de Lcm e como parâmetro a Serial que será ligado o Display
 
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+
 /*******************************************************************************************************************************************
- * Inicialização dos LcmVars
- */
+ * Inicialização dos LcmVars*/
 
 LcmVar ExitIntroButton(0);                 // "LcmVar" do botão da tela de introdução (PicId 0 - Intro)
 
@@ -122,18 +129,15 @@ LcmVar Sensor(); //colocar o vp
 LcmVar Aplicacao(); //colocar o vp
 
 /*******************************************************************************************************************************************
- * Inicialização das funções
- */
+ * Inicialização das funções*/
 
 int ler_sensor();
-void controlar_fita(uint8_t porta, int intensidade);
-void logica();
-void caso();
-void controlar_intensidade();
+void controlar_intensidade(uint8_t porta, int intensidade);
+int resultado_sensor();
+
 
 /*******************************************************************************************************************************************
- * Inicialização do código
- */
+ * Inicialização do código*/
 
 void setup() {
   Serial.begin(9600);
@@ -142,36 +146,27 @@ void setup() {
   pwm.setOscillatorFrequency(27000000);
   pwm.setPWMFreq(1600);  
   Wire.setClock(400000);
-  //attachInterrupt(digitalPinToInterrupt(2), inicio, LOW);
 }
 
 void loop() {
 
-  /*******************************************************************************************************************************************
-     * Início do código da tela de introdução (PicId 0 - Intro)*/
+  int PicId = Lcm.readPicId();
 
-	if (ExitIntroButton.available())		// Verifica se chegou algo no "LcmVar" "ExitIntroButton"
-	{
-		if (ExitIntroButton.getData() == initDemo)	// Verifica se o valor recebido pelo "LcmVar" "ExitIntroButton" é o "Return Value" do botão da tela de introdução (PicId 0 - Intro) - que irá atribuir os valores a todos os campos
-		{
-			Lcm.changePicId(picIdMain);                           // Muda a tela para a tela principal (PicId 1 - senha)
-		}
-	}
-    /* Término do código da tela de introdução (PicId 0 - Intro)
-     *******************************************************************************************************************************************/
+  if(PicId == 7){
 
+    // Intensidade total
+    for(int i = 0; i < 8; i++){
+      controlar_intensidade(portas[i], 100);
+    }
+
+    protecao_maxima = resultado_sensor();
+
+     for(int i = 0; i < 8; i++){
+       controlar_intensidade(portas[i], 0);
+    }
+
+  }
  
-
-
-}
-
-void incio(){
-
-
-}
-
-void logica(){
-
 
 }
 
@@ -194,14 +189,17 @@ int ler_sensor()
    
 }
 
-void controlar_fita(uint8_t porta, int intensidade){
+int resultado_sensor(){
+
+int max = 870;
+int protecao = 0;
+
+
+return protecao;
+}
+
+void controlar_intensidade(uint8_t porta, int intensidade){
   pwm.setPWM(porta, 0, 900+18*intensidade);
 }
 
-void caso(){
 
-}
-
-void controlar_intensidade(){
-
-}
