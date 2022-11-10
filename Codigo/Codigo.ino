@@ -174,8 +174,8 @@ void loop() {
 
   int PicId = Lcm.readPicId();
 
-  if(PicId == 7){
-
+  if(PicId == 7)
+  {
     // Intensidade total
     for(int i = 0; i < 8; i++){
       controlar_intensidade(portas[i], 100);
@@ -213,7 +213,15 @@ void loop() {
     else status[20] ='desprotegido'; 
 
     Resultado.write(status,20);
+  }
 
+  if(PicId == 0)
+  {
+    //desliga os leds quando vai para a tela inicial
+      for(int i = 0; i < 8; i++)
+      {
+          controlar_intensidade(portas[i], 0);
+      }
   }
  
 
