@@ -19,110 +19,64 @@ struct casos{
 };
 
 struct casos ceu[6] ={
-                      {1000, 100},    // ceu limpo claro
-                      {1000, 70},     // ceu limpo escuro
-                      {1000, 90},     // ceu poucas nuvens claro
-                      {1000, 70},     // ceu muitas nuves claro
-                      {1000, 60},     // ceu chuvoso nuvens claras
-                      {1000, 50}      // ceu chuvoso nunves escurar
+                      {1, 100},    // ceu limpo claro
+                      {2, 70},     // ceu limpo escuro
+                      {3, 90},     // ceu poucas nuvens claro
+                      {4, 70},     // ceu muitas nuves claro
+                      {5, 60},     // ceu chuvoso nuvens claras
+                      {6, 50}      // ceu chuvoso nunves escurar
                       };  
 
 struct casos superficie[6] ={
-                              {1000, 0.3*c},    // terra vermelha
-                              {1000, 0.1*c},    // asfalto
-                              {1000, 0.2*c},     // natureza
-                              {1000, 0.4*c},     // agua
-                              {1000, 0.9*c},     // neve
-                              {1000, 0.15*c}      // cidade
+                              {1, 0.3*c},    // terra vermelha
+                              {2, 0.1*c},    // asfalto
+                              {3, 0.2*c},     // natureza
+                              {4, 0.4*c},     // agua
+                              {5, 0.9*c},     // neve
+                              {6, 0.15*c}      // cidade
                             };  
 
 
 /*************************************************************
 Indice das telas*/
 
-const int picIdIntro = 0;                         // PicId da tela de introdução              (PicId 00 - Intro    )
-const int picIdAramacao = 1;                      // PicId da tela de armacao               
-const int picIdMaterialArm = 2;                   // PicId da tela do material armacao                  
-const int picIdPonte = 3;                         // PicId da tela da ponte            
-const int picIdMaterialPonte = 4;                 // PicId da tela do material da ponte          
-const int picIdHaste = 5;                         // PicId da tela da haste            
-const int picIdMaterialHaste = 6;                 // PicId da tela do material da haste          
-const int picIdTipoAnalise = 7;                   // PicId da tela do tipo de analise            
-const int picIdCeu = 8;                           // PicId da tela do ceu            
-const int picIdIdSuperficie = 9;                  // PicId da tela da superficie 
-const int picIdIdResultado = 10;                  // PicId da tela do resultado 
+const int picIdIntro = 0;                         // PicId da tela de introdução 
+const int picIdAramacao = 3;                      // PicId da tela de armacao    
+const int picIdAramacao = 4;                      // PicId da tela de armacao               
+const int picIdMaterialArm = 5;                   // PicId da tela do material armacao                  
+const int picIdPonte = 6;                         // PicId da tela da ponte            
+const int picIdMaterialPonte = 7;                 // PicId da tela do material da ponte          
+const int picIdHaste = 8;                         // PicId da tela da haste            
+const int picIdMaterialHaste = 9;                 // PicId da tela do material da haste  
+const int picIdMaterialHaste2 = 10;                 // PicId da tela do material da haste         
+const int picIdTipoAnalise = 20;                   // PicId da tela do tipo de analise            
+const int picIdCeu1 = 25;                           // PicId da tela do ceu       
+const int picIdCeu2 = 26;                           // PicId da tela do ceu    
+const int picIdCeu3 = 27;                           // PicId da tela do ceu       
+const int picIdIdSuperficie1 = 28;                  // PicId da tela da superficie 
+const int picIdIdSuperficie2 = 29;                  // PicId da tela da superficie 
+const int picIdIdResultado = 31;                  // PicId da tela do resultado 
 
 /*******************************************************************************************************************************************
- * Variáveis da tela de introdução (PicId 0 - intro)*/
+/************ Variáveis da tela ARMAÇÕES ******/
 
-const int initDemo = 1000;                  // "Return Value" do único botão da tela de introdução (A tela inteira é o botão)
+short int tipo_armacao; // 1 a 6 return
 
-/*******************************************************************************************************************************************
- * Variáveis da tela senha (PicId 1 - Senha)*/
+/************ Variáveis da tela MATERIAIS ******/
 
-const int cont1 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt1 = 1002;                  // "Return Value" do botão da tela voltar
+short int tipo_material1_arm;      // 1 a 4
+short int tipo_material2_arm;    // 1 a 4
 
-long senha;                            //variavel da senha
+/************ Variáveis da tela PONTE ******/
 
-/*******************************************************************************************************************************************
- * Variáveis da tela de Tipo (PicId 2 - tipo)*/
- 
-const int feira = 1000;                  // "Return Value" do botão feira
-const int universidade = 1001;           // "Return Value" do botão universidade
-const int cont2 = 1001;                  // "Return Value" do botão da tela continuar
-const int volt2 = 1002;                  // "Return Value" do botão da tela voltar
+short int tipo_ponte ;      // 1 a 3
+short int tipo_material_ponte;    // 1 a 4
 
+/************ Variáveis da tela HASTE ******/
 
-/*******************************************************************************************************************************************
- * Variáveis da tela teoria 0 (PicId 3 - teoria)*/
-
-const int teoria0= 1000;                  // "Return Value" do único botão da tela  (A tela inteira é o botão)
-
-/*******************************************************************************************************************************************
- * Variáveis da tela de teoria 1 (PicId 4 - teoria)*/
-
-const int teoria1 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
-
-/*******************************************************************************************************************************************
- * Variáveis da tela de teoria 2 (PicId 5 - teoria)*/
-
-const int teoria2 = 1000;                  // "Return Value" do único botão da tela (A tela inteira é o botão)
-
-/*******************************************************************************************************************************************
- * Variáveis da tela material da haste (PicId 6 - mat haste)*/
-
-const int  Hmaterial1 = 1000;                  // "Return Value" do botão 
-const int  Hmaterial2 = 1000;                  // "Return Value" do botão
-const int  Hmaterial3 = 1000;                  // "Return Value" do botão
-const int  Hmaterial4 = 1000;                  // "Return Value" do botão
-
-/*******************************************************************************************************************************************
- * Variáveis da tela do tipo de analise (PicId 7 - tipo analise)*/
-
-const int agora = 1000;                  // "Return Value" do botão
-const int escolha = 1000;                // "Return Value" do botão
-
-/******************************************************************************************************************************************
- * Variáveis da tela céu (PicId 8 - céu)
-
-const int ceu1 = 1000;                  // "Return Value" do botão 
-const int ceu2 = 1000;                  // "Return Value" do botão 
-const int ceu3 = 1000;                  // "Return Value" do botão
-const int ceu4 = 1000;                  // "Return Value" do botão  
-const int ceu5 = 1000;                  // "Return Value" do botão 
-const int ceu6 = 1000;                  // "Return Value" do botão 
-
-*******************************************************************************************************************************************
-  Variáveis da tela superficie (PicId 9 - tipos superfície)
-
-const int sup1 = 1001;                  // "Return Value" do botão 
-const int sup2 = 1002;                  // "Return Value" do botão 
-const int sup3 = 1002;                  // "Return Value" do botão 
-const int sup4 = 1002;                  // "Return Value" do botão 
-const int sup5 = 1002;                  // "Return Value" do botão 
-const int sup6 = 1002;                  // "Return Value" do botão 
-*/
+short int haste;   // 1 a 6
+short int tipo_material1_haste;    // 1 a 4
+short int tipo_material2_haste;    // 1 a 4
 
 
 /*******************************************************************************************************************************************
@@ -143,12 +97,21 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 /*******************************************************************************************************************************************
  * Inicialização dos LcmVars*/
 
-LcmVar EscolhaCeu(10); //colocar o vp
-LcmVar EscolhaSup(11); //colocar o vp
+LcmVar Armacao(10);
+LcmVar Material1_arm(21);
+LcmVar Material2_arm(22);
+LcmVar Ponte(30);
+LcmVar Material_ponte(31);
+LcmVar Haste(40);
+LcmVar Material_haste1(41);
+LcmVar Material_haste2(42);
 
-LcmVar ResultProtecao(12); //colocar o vp
-LcmVar Maxima(13);
-LcmString Resultado(14);
+LcmVar EscolhaCeu(80); //colocar o vp
+LcmVar EscolhaSup(80); //colocar o vp
+
+LcmVar ResultProtecao(59); //colocar o vp
+LcmVar Maxima(60);
+LcmString Resultado(61);
 
 /*******************************************************************************************************************************************
  * Inicialização das funções*/
