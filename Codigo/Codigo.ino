@@ -41,8 +41,8 @@ struct casos superficie[6] ={
 Indice das telas*/
 
 const int picIdIntro = 0;                         // PicId da tela de introdução 
-const int picIdAramacao = 3;                      // PicId da tela de armacao    
-const int picIdAramacao = 4;                      // PicId da tela de armacao               
+const int picIdArmacao1 = 3;                      // PicId da tela de armacao    
+const int picIdArmacao2 = 4;                      // PicId da tela de armacao               
 const int picIdMaterialArm = 5;                   // PicId da tela do material armacao                  
 const int picIdPonte = 6;                         // PicId da tela da ponte            
 const int picIdMaterialPonte = 7;                 // PicId da tela do material da ponte          
@@ -78,6 +78,15 @@ short int haste;   // 1 a 6
 short int tipo_material1_haste;    // 1 a 4
 short int tipo_material2_haste;    // 1 a 4
 
+/************ Variáveis da tela Lente ******/
+
+short int tipo_lente ;      // 1 a 3
+short int cor_lente;    // 1 a 4
+
+/************ Variáveis da tela Sensor ******/
+
+int Ref;
+int leitura_total;
 
 /*******************************************************************************************************************************************
  * Variáveis da tela resultado (PicId 10 - resultado)*/
@@ -144,14 +153,15 @@ void loop() {
       controlar_intensidade(portas[i], 100);
     }
 
-    total = resultado_sensor();
+    leitura_total = ler_sensor();
+
 
      for(int i = 0; i < 8; i++){
        controlar_intensidade(portas[i], 0);
     }
   }
 
-  if(PicId == 10)
+  if(PicId == 10) // tela que liga os Leds 
   {
     
     caso(); // verifica qual foi o caso escolhido
@@ -165,10 +175,42 @@ void loop() {
       controlar_intensidade(portas[i],(int)s);
     }
 
-    // Lê os sensores e verifica a proteçao
-    situacao = resultado_sensor();
+  }
 
-     
+  if(PicId == 11)
+  {
+      // Leitura sensor sem óculos do caso
+     Ref =  ler_sensor();
+  }
+
+  if(PicId == 12)// 
+  {
+     // Intensidade total com oculos
+    for(int i = 0; i < 8; i++){
+      controlar_intensidade(portas[i], 100);
+    }
+
+    total = resultado_sensor(leitura_total);
+
+  }
+
+  if(PicId == 13)
+  {
+        // Aciona os LEDs para o determinado caso, com óculos 
+    for(int i = 0; i < 4; i++){
+      controlar_intensidade(portas[i], (int)c);
+    }
+
+    for(int i = 4; i < 8; i++){
+      controlar_intensidade(portas[i],(int)s);
+    }
+
+    situacao = resultado_sensor(Ref);
+  }
+
+
+  if(PicId == 15)
+  {
     Maxima.write(total);
     ResultProtecao.write(situacao);
 
@@ -196,27 +238,29 @@ int ler_sensor()
    x1 = analogRead(A2);
    x2 = analogRead(A3);
    
-   if (x2>x1) 
-   {
-     x3 = x2/x1;
-     return x3*x2;
-   }
-   else 
-   {
-     x3 = x1/x2;
-     return x3*x1;
-   }
-   
+   x3 = x1/x2;
+  
+  return x3; 
 }
 
-int resultado_sensor(){
+int resultado_sensor(int referencia)
+{
 
-int max = 870;
-int protecao = 0;
+    int Ref2 = 0;
+    int sensor_oculos = 0;
+    int max = 0;
+    float protecao = 0;
 
+    Ref2 = analogRead(A2);
+    max = Ref2/referencia;
+    
+    sensor_oculos = analogRead(A3);
 
-return protecao;
+    protecao = (int)(sensor_oculos/max)*100;
+
+    return protecao;
 }
+
 
 void controlar_intensidade(uint8_t porta, int intensidade){
   pwm.setPWM(porta, 0, 900+18*intensidade);
