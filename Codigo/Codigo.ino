@@ -11,11 +11,11 @@ const uint8_t portas[8] = {10,11,12,13,14,15,16,17};   //portas dos 8 quadrantes
 /*************************************************************
 Casos*/
 
-float c,s; //intensidades
+float c,s; //intensidades do céu e da superfície 
 
 struct casos{
-  int memoria;
-  float intensidade;
+  int memoria;         // valor da memoria salvo
+  float intensidade;   // valor da intensidade referente a esse
 };
 
 struct casos ceu[6] ={
@@ -30,10 +30,10 @@ struct casos ceu[6] ={
 struct casos superficie[6] ={
                               {1, 0.3*c},    // terra vermelha
                               {2, 0.1*c},    // asfalto
-                              {3, 0.2*c},     // natureza
-                              {4, 0.4*c},     // agua
-                              {5, 0.9*c},     // neve
-                              {6, 0.15*c}      // cidade
+                              {3, 0.2*c},    // natureza
+                              {4, 0.4*c},    // agua
+                              {5, 0.9*c},    // neve
+                              {6, 0.15*c}    // cidade
                             };  
 
 
@@ -47,14 +47,14 @@ const int picIdMaterialArm = 5;                   // PicId da tela do material a
 const int picIdPonte = 6;                         // PicId da tela da ponte            
 const int picIdMaterialPonte = 7;                 // PicId da tela do material da ponte          
 const int picIdHaste = 8;                         // PicId da tela da haste            
-const int picIdMaterialHaste = 9;                 // PicId da tela do material da haste  
-const int picIdMaterialHaste2 = 10;                 // PicId da tela do material da haste         
-const int picIdTipoAnalise = 20;                   // PicId da tela do tipo de analise            
-const int picIdCeu1 = 25;                           // PicId da tela do ceu       
-const int picIdCeu2 = 26;                           // PicId da tela do ceu    
-const int picIdCeu3 = 27;                           // PicId da tela do ceu       
-const int picIdIdSuperficie1 = 28;                  // PicId da tela da superficie 
-const int picIdIdSuperficie2 = 29;                  // PicId da tela da superficie 
+const int picIdMaterialHaste = 9;                 // PicId da tela do material da haste  1
+const int picIdMaterialHaste2 = 10;               // PicId da tela do material da haste  2       
+const int picIdTipoAnalise = 20;                  // PicId da tela do tipo de analise            
+const int picIdCeu1 = 25;                         // PicId da tela do ceu       
+const int picIdCeu2 = 26;                         // PicId da tela do ceu    
+const int picIdCeu3 = 27;                         // PicId da tela do ceu       
+const int picIdIdSuperficie1 = 28;                // PicId da tela da superficie 
+const int picIdIdSuperficie2 = 29;                // PicId da tela da superficie 
 const int picIdIdResultado = 31;                  // PicId da tela do resultado 
 
 /*******************************************************************************************************************************************
@@ -85,15 +85,15 @@ short int cor_lente;    // 1 a 4
 
 /************ Variáveis da tela Sensor ******/
 
-int Ref;
-int leitura_total;
+int Ref;                   // referência do caso escolhido
+int leitura_total;         // referência da leitura total
 
 /*******************************************************************************************************************************************
  * Variáveis da tela resultado (PicId 10 - resultado)*/
 
 int total = 0;                  // valor da proteçao com luz total
 int situacao = 0;               // valor da protecao para a situacao escolhida
-char status[20];                    // status de proteção
+char status[20];                // status de proteção
 
 
 /*******************************************************************************************************************************************
@@ -104,9 +104,9 @@ LCM Lcm(Serial);                           // Necessário a Inicialização do L
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 /*******************************************************************************************************************************************
- * Inicialização dos LcmVars*/
+ * Inicialização dos LcmVars - Objetos com  seus endereços de memória*/ 
 
-LcmVar Armacao(10);
+LcmVar Armacao(10);     
 LcmVar Material1_arm(21);
 LcmVar Material2_arm(22);
 LcmVar Ponte(30);
@@ -115,10 +115,10 @@ LcmVar Haste(40);
 LcmVar Material_haste1(41);
 LcmVar Material_haste2(42);
 
-LcmVar EscolhaCeu(80); //colocar o vp
-LcmVar EscolhaSup(80); //colocar o vp
+LcmVar EscolhaCeu(80); 
+LcmVar EscolhaSup(80); 
 
-LcmVar ResultProtecao(59); //colocar o vp
+LcmVar ResultProtecao(59); 
 LcmVar Maxima(60);
 LcmString Resultado(61);
 
@@ -127,7 +127,7 @@ LcmString Resultado(61);
 
 int ler_sensor();
 void controlar_intensidade(uint8_t porta, int intensidade);
-int resultado_sensor();
+int resultado_sensor(int referencia);
 void caso();
 
 /*******************************************************************************************************************************************
@@ -144,33 +144,35 @@ void setup() {
 
 void loop() {
 
-  int PicId = Lcm.readPicId();
+  int PicId = Lcm.readPicId(); // ler a tela que o display está no momento
 
   if(PicId == 7)
   {
-    // Intensidade total
+    // liga tudo em Intensidade total
     for(int i = 0; i < 8; i++){
       controlar_intensidade(portas[i], 100);
     }
 
-    leitura_total = ler_sensor();
+    leitura_total = ler_sensor(); // ler o sensor em intesidade total sem o óculos 
 
-
-     for(int i = 0; i < 8; i++){
+   
+    // desliga a esfera
+    for(int i = 0; i < 8; i++){
        controlar_intensidade(portas[i], 0);
     }
   }
 
-  if(PicId == 10) // tela que liga os Leds 
+  if(PicId == 10) 
   {
     
     caso(); // verifica qual foi o caso escolhido
 
-    // Aciona os LEDs
+    // Aciona os LEDs do céu
     for(int i = 0; i < 4; i++){
       controlar_intensidade(portas[i], (int)c);
     }
 
+    // Aciona os LEDs da superfície 
     for(int i = 4; i < 8; i++){
       controlar_intensidade(portas[i],(int)s);
     }
@@ -190,7 +192,7 @@ void loop() {
       controlar_intensidade(portas[i], 100);
     }
 
-    total = resultado_sensor(leitura_total);
+    total = resultado_sensor(leitura_total); // faz a leitura com os oculos e realiza os cálculos 
 
   }
 
@@ -205,11 +207,11 @@ void loop() {
       controlar_intensidade(portas[i],(int)s);
     }
 
-    situacao = resultado_sensor(Ref);
+    situacao = resultado_sensor(Ref); // faz a leitura com os oculos e realiza os cálculos 
   }
 
 
-  if(PicId == 15)
+  if(PicId == 15) // mostra o resultado obtido
   {
     Maxima.write(total);
     ResultProtecao.write(situacao);
@@ -232,7 +234,9 @@ void loop() {
 
 }
 
-int ler_sensor()
+// Funções 
+
+int ler_sensor() // leitura dos sensores e realiza a razão 
 {
   int x1, x2, x3;
    x1 = analogRead(A2);
@@ -243,15 +247,15 @@ int ler_sensor()
   return x3; 
 }
 
-int resultado_sensor(int referencia)
+int resultado_sensor(int referencia) // analisa o resultado com o oculos
 {
 
-    int Ref2 = 0;
-    int sensor_oculos = 0;
-    int max = 0;
-    float protecao = 0;
+    int Ref2 = 0;                // referencia com o oculos
+    int sensor_oculos = 0;       //  valor do sensor com o oculos
+    int max = 0;                 // razão entre as duas referências
+    float protecao = 0;          // resultado da proteção
 
-    Ref2 = analogRead(A2);
+    Ref2 = analogRead(A2);      
     max = Ref2/referencia;
     
     sensor_oculos = analogRead(A3);
@@ -266,7 +270,7 @@ void controlar_intensidade(uint8_t porta, int intensidade){
   pwm.setPWM(porta, 0, 900+18*intensidade);
 }
 
-void caso()
+void caso() // determina qual caso foi escolhido pelo usuário 
 {
   
   int leitura_ceu = EscolhaCeu.getData();
