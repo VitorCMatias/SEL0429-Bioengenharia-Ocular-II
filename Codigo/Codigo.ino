@@ -1,3 +1,9 @@
+/* Nome: Claudia Stefen Andrade. (Nº USP: 10748563)
+Rogerio Longuinho de Souza. (Nº USP: 11320895)
+Roque André G. Louzada. (Nº USP: 10746602)
+Rodrigo Kenji Yaly Aoki. (N°USP: 10788738)
+Vitor da Costa Matias (N° USP 11892153)*/
+
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <UnicViewAD.h>
@@ -7,6 +13,7 @@
 Variaveis Gerais*/
 
 const uint8_t portas[8] = {10,11,12,13,14,15,16,17};   //portas dos 8 quadrantes de intensidade (4 primeiras céu e 4 utltimas superficie);
+
 
 /*************************************************************
 Casos*/
@@ -41,21 +48,27 @@ struct casos superficie[6] ={
 Indice das telas*/
 
 const int picIdIntro = 0;                         // PicId da tela de introdução 
-const int picIdArmacao1 = 3;                      // PicId da tela de armacao    
-const int picIdArmacao2 = 4;                      // PicId da tela de armacao               
-const int picIdMaterialArm = 5;                   // PicId da tela do material armacao                  
-const int picIdPonte = 6;                         // PicId da tela da ponte            
-const int picIdMaterialPonte = 7;                 // PicId da tela do material da ponte          
-const int picIdHaste = 8;                         // PicId da tela da haste            
-const int picIdMaterialHaste = 9;                 // PicId da tela do material da haste  1
-const int picIdMaterialHaste2 = 10;               // PicId da tela do material da haste  2       
+const int picIdArmacao1 = 2;                      // PicId da tela de armacao    
+const int picIdArmacao2 = 3;                      // PicId da tela de armacao               
+const int picIdMaterialArm = 4;                   // PicId da tela do material armacao                  
+const int picIdMaterialArm2 = 5;                   // PicId da tela do material armacao                  
+
+const int picIdPonte = 9;                         // PicId da tela da ponte            
+const int picIdMaterialPonte = 10;                 // PicId da tela do material da ponte          
+const int picIdHaste = 6;                         // PicId da tela da haste            
+const int picIdMaterialHaste = 7;                 // PicId da tela do material da haste  1
+const int picIdMaterialHaste2 = 8;               // PicId da tela do material da haste  2  
+
+const int picIdCor_lente = 11;
+const int picIdCor_lente2 = 12;
+const int picIdIntens_lente = 13;
+
 const int picIdTipoAnalise = 20;                  // PicId da tela do tipo de analise            
-const int picIdCeu1 = 25;                         // PicId da tela do ceu       
-const int picIdCeu2 = 26;                         // PicId da tela do ceu    
-const int picIdCeu3 = 27;                         // PicId da tela do ceu       
-const int picIdIdSuperficie1 = 28;                // PicId da tela da superficie 
-const int picIdIdSuperficie2 = 29;                // PicId da tela da superficie 
-const int picIdIdResultado = 31;                  // PicId da tela do resultado 
+const int picIdCeu1 = 14;                         // PicId da tela do ceu       
+     
+const int picIdIdSuperficie1 = 15;                // PicId da tela da superficie 
+
+const int picIdIdResultado = 18;                  // PicId da tela do resultado 
 
 /*******************************************************************************************************************************************
 /************ Variáveis da tela ARMAÇÕES ******/
@@ -106,21 +119,21 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 /*******************************************************************************************************************************************
  * Inicialização dos LcmVars - Objetos com  seus endereços de memória*/ 
 
-LcmVar Armacao(10);     
-LcmVar Material1_arm(21);
-LcmVar Material2_arm(22);
-LcmVar Ponte(30);
-LcmVar Material_ponte(31);
-LcmVar Haste(40);
-LcmVar Material_haste1(41);
-LcmVar Material_haste2(42);
+LcmVar Armacao(102);     
+LcmVar Material1_arm(104);
+LcmVar Material2_arm(105);
+LcmVar Ponte(109);
+LcmVar Material_ponte(110);
+LcmVar Haste(106);
+LcmVar Material_haste1(107);
+LcmVar Material_haste2(108);
+LcmVar Cor_Lente(111);
+LcmVar intensidade_lente(113);
 
-LcmVar EscolhaCeu(80); 
-LcmVar EscolhaSup(80); 
+LcmVar EscolhaCeu(114); 
+LcmVar EscolhaSup(115); 
 
-LcmVar ResultProtecao(59); 
-LcmVar Maxima(60);
-LcmString Resultado(61);
+LcmVar ResultProtecao(118); 
 
 /*******************************************************************************************************************************************
  * Inicialização das funções*/
@@ -134,7 +147,7 @@ void caso();
  * Inicialização do código*/
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Lcm.begin();
   pwm.begin();
   pwm.setOscillatorFrequency(27000000);
@@ -144,10 +157,15 @@ void setup() {
 
 void loop() {
 
-  int PicId = Lcm.readPicId(); // ler a tela que o display está no momento
+delay(100);
+int PicId = Lcm.readPicId(); // ler a tela que o display está no momento
+Serial.println(' ');
+//Serial.println(PicId);
+//delay(100);
 
-  if(PicId == 7)
+  if(PicId == 13)
   {
+  
     // liga tudo em Intensidade total
     for(int i = 0; i < 8; i++){
       controlar_intensidade(portas[i], 100);
@@ -160,11 +178,12 @@ void loop() {
     for(int i = 0; i < 8; i++){
        controlar_intensidade(portas[i], 0);
     }
+
   }
 
-  if(PicId == 10) 
+  if(PicId == 16) 
   {
-    
+    Serial.println("hjj");
     caso(); // verifica qual foi o caso escolhido
 
     // Aciona os LEDs do céu
@@ -177,16 +196,14 @@ void loop() {
       controlar_intensidade(portas[i],(int)s);
     }
 
+    Ref =  ler_sensor();
+
   }
 
-  if(PicId == 11)
-  {
-      // Leitura sensor sem óculos do caso
-     Ref =  ler_sensor();
-  }
 
-  if(PicId == 12)// 
+  if(PicId == 17)// 
   {
+    
      // Intensidade total com oculos
     for(int i = 0; i < 8; i++){
       controlar_intensidade(portas[i], 100);
@@ -194,10 +211,6 @@ void loop() {
 
     total = resultado_sensor(leitura_total); // faz a leitura com os oculos e realiza os cálculos 
 
-  }
-
-  if(PicId == 13)
-  {
         // Aciona os LEDs para o determinado caso, com óculos 
     for(int i = 0; i < 4; i++){
       controlar_intensidade(portas[i], (int)c);
@@ -207,19 +220,16 @@ void loop() {
       controlar_intensidade(portas[i],(int)s);
     }
 
-    situacao = resultado_sensor(Ref); // faz a leitura com os oculos e realiza os cálculos 
+    situacao = resultado_sensor(Ref); // faz a leitura com os oculos e realiza os cálculos
+
+
+
   }
 
 
-  if(PicId == 15) // mostra o resultado obtido
+  if(PicId == 18) // mostra o resultado obtido
   {
-    Maxima.write(total);
     ResultProtecao.write(situacao);
-
-    if(situacao>70) status[20] ='protegido';
-    else status[20] ='desprotegido'; 
-
-    Resultado.write(status,20);
   }
 
   if(PicId == 0)
@@ -273,7 +283,8 @@ void controlar_intensidade(uint8_t porta, int intensidade){
 void caso() // determina qual caso foi escolhido pelo usuário 
 {
   
-  int leitura_ceu = EscolhaCeu.getData();
+  int leitura_ceu = EscolhaCeu.read();
+  Serial.println(leitura_ceu);
 
     for(int j = 0; j<6;j++)
     {
